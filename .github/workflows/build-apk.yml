@@ -1,0 +1,52 @@
+name: Build APK ALHUDA_D.NET
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@v4
+
+      - name: Pasang Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Pasang Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Pasang Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Capacitor
+        run: npm install
+
+      - name: Buat proyek Android
+        run: |
+          rm -rf android
+          npx cap add android
+          bash scripts/setup-android.sh
+          npx cap sync android
+
+      - name: Build APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Beri nama APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk "ALHUDA_D.NET-v${{ github.run_number }}.apk"
+
+      - name: Unggah APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALHUDA_D.NET-APK
+          path: ALHUDA_D.NET-v*.apk
