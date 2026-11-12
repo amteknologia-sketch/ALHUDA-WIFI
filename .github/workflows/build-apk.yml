@@ -23,8 +23,15 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Pasang Android SDK
-        uses: android-actions/setup-android@v3
+      # Android SDK sudah tersedia di runner ubuntu-latest (tanpa setup-android)
+      - name: Cek Android SDK & terima lisensi
+        run: |
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          echo "SDK: $SDK"
+          SM=$(ls -d "$SDK"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | tail -1 || true)
+          if [ -n "$SM" ]; then yes | "$SM" --licenses > /dev/null 2>&1 || true; fi
 
       - name: Install Capacitor
         run: npm install
@@ -39,6 +46,7 @@ jobs:
       - name: Build APK
         working-directory: android
         run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
