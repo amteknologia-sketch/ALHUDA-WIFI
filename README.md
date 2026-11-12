@@ -1,75 +1,82 @@
-# ALHUDA_D.NET — Aplikasi Android (APK)
-Dayah Al-Huda Malikussaleh · Property Of DAMAS.Media_Centre 2026
+# ALHUDA_D.NET — Aplikasi Android Admin Hotspot (mode langsung ke router)
 
-Aplikasi Android ini **terhubung langsung ke API MikroTik (10.10.10.1:8728) dari HP**, tanpa server atau hosting.
-Tampilan: satu halaman utama, berurutan Penggunaan → Username (Edit/Keluar) → Penggunaan & Kadaluarsa (hitung mundur) → Daftar Online (DOWN/UP langsung) → Daftar Cookie → Interface Padat (5 terbesar).
-Di kanan atas: ikon 🎨 Tema (Terang, Biru, Hijau, Pink, Gelap — warna ikut sampai area jam) dan ⚙️ Peraturan (admin).
-Notifikasi Android otomatis muncul 1 hari sebelum masa berlaku username habis (izin notifikasi diminta saat pertama kali).
+Versi ini **tidak butuh server, PHP, atau hosting sama sekali**. Aplikasi
+berbicara **langsung ke MikroTik** lewat RouterOS API (TCP) dari dalam HP.
+Cukup isi IP/host, port, username, dan password router.
 
-## Cara build APK (GitHub Actions, tanpa install apa pun di laptop)
+Fitur: Beranda (info MikroTik, hotspot aktif, trafik angka, pendapatan),
+Pengguna (lihat/tambah/hasilkan/cepat + profil), Log, Laporan (bulan ini/kemarin),
+Peraturan (daftar router, nama aplikasi, logo, tema). Cetak PDF voucher &
+bagikan ke WhatsApp tetap ada.
 
-1. Buka https://github.com dan login. Klik **New repository**, beri nama misalnya `alhuda-dnet-apk`, lalu klik **Create repository**.
-2. Ekstrak zip ini. Di halaman repo, klik **uploading an existing file**, lalu seret **seluruh isi** folder `alhuda-apk`
-   (termasuk folder `.github`, `www`, `native`, `resources`, `scripts`, `hotspot`, serta file `package.json` dan `capacitor.config.json`). Klik **Commit changes**.
-   > Folder `.github` kadang tersembunyi di Windows/HP. Aktifkan *Tampilkan file tersembunyi*.
-   > Jika tetap tidak terunggah, buat file manual: **Add file → Create new file**, beri nama `.github/workflows/build-apk.yml`, lalu tempel isinya.
-3. Buka tab **Actions**. Workflow **Build APK ALHUDA_D.NET** akan berjalan sendiri (sekitar 4–7 menit).
-   Jika tidak berjalan, pilih workflow tersebut lalu klik **Run workflow**.
-4. Setelah ada tanda centang hijau, klik nama run tersebut. Di bagian **Artifacts**, unduh **ALHUDA_D.NET-APK**, lalu ekstrak zip-nya untuk mendapatkan file `.apk`.
-5. Pindahkan APK ke HP dan buka filenya. Izinkan *Instal dari sumber tidak dikenal* jika diminta.
-
-Setiap kali ada file yang diubah lalu di-commit, APK baru akan dibuat otomatis.
-
-### Build di laptop sendiri (opsional)
-Butuh Node.js 20+, JDK 21, dan Android Studio/SDK.
 ```
-npm install
-npm run android:add          # membuat folder android + memasang plugin, ikon, splash
-cd android && ./gradlew assembleDebug
-# hasil: android/app/build/outputs/apk/debug/app-debug.apk
+ALHUDA_D.NET/
+├─ www/                      ← isi aplikasi (HTML/CSS/JS)
+├─ plugins/routeros/         ← plugin native (Java) RouterOS API via TCP
+├─ resources/                ← icon.png & splash.png
+├─ .github/workflows/        ← build APK otomatis di GitHub
+├─ capacitor.config.json
+├─ package.json
+└─ README.md
 ```
 
-## Pengaturan MikroTik (wajib)
+---
 
-**1. Aktifkan API**
-```
-/ip service set api disabled=no port=8728
-```
+## Membuat APK lewat GitHub (tanpa Android Studio)
 
-**2. (Sangat disarankan) Buat user API khusus aplikasi dengan hak terbatas**
-```
-/user group add name=apk-hotspot policy=read,write,api
-/user add name=zakas password=zakas group=apk-hotspot
-```
-Jika user `zakas` sudah ada sebagai admin penuh, sebaiknya buat user lain (misalnya `apkdnet`).
-Setelah itu ganti user/password di **Peraturan → Koneksi MikroTik**, atau ubah nilai bawaannya di `www/assets/backend.js` (`DEF_ROUTER`) sebelum build.
+1. Buat repository baru di github.com (boleh Private).
+2. Ekstrak ZIP, lalu unggah **ISI** folder `ALHUDA_D.NET` ke root repo
+   (`package.json`, `www`, `plugins`, `.github`, dll harus di root — bukan di
+   dalam subfolder).
+3. Buka tab **Actions** → workflow **Build APK** jalan otomatis (atau Run workflow).
+   Build pertama agak lama (Gradle mengunduh Android SDK + meng-compile plugin native).
+4. Setelah centang hijau → buka run → bagian **Artifacts** → unduh
+   **`ALHUDA_D.NET-debug-apk`** → ekstrak → `app-debug.apk`.
+5. Pasang di HP (izinkan "Install dari sumber tidak dikenal").
 
-**3. Izinkan HP yang belum login hotspot mengakses API.** Aturan ini dibutuhkan agar tombol HUBUNGKAN di aplikasi bisa dipakai sebelum login:
-```
-/ip firewall filter add chain=pre-hs-input protocol=tcp dst-port=8728 action=accept comment="APK ALHUDA_D.NET"
-```
+> Build via komputer sendiri juga bisa: `npm install && npx cap add android && npx cap sync android`,
+> lalu `cd android && ./gradlew assembleDebug`.
 
-**4. (Opsional) Halaman login hotspot di router.** Unggah `hotspot/login.html`, `hotspot/alogin.html`, dan folder `hotspot/img/` ke folder hotspot di MikroTik.
-Biarkan `var PORTAL = '';` tetap kosong.
+---
 
-## Cara kerja
-- **Data bersama disimpan di MikroTik.** Header, banner, pemberitahuan, paket, wifi, kode admin, dan notifikasi ganti username disimpan di **System → Scripts** dengan nama `ALHUDA_CFG_*`, `ALHUDA_BANNER_*`, dan `ALHUDA_NOTIF_*`. Karena itu, perubahan admin dari satu HP langsung terlihat di semua HP. **Jangan hapus script tersebut.**
-- **Koneksi router disimpan di masing-masing HP.** IP, port, user, dan password yang diubah di Peraturan hanya berlaku di HP itu.
-- **Kode admin bawaan: `Zakas11`.** Kode ini bisa diganti di Peraturan dan langsung berlaku di semua HP.
-- **HUBUNGKAN:** aplikasi memeriksa kode, lalu me-login-kan HP ke hotspot lewat API (`/ip hotspot active login`, berdasarkan IP dan MAC HP).
-- **Offline:** tampilan dan data terakhir tersimpan di HP. Data diperbarui otomatis saat tersambung ke router, atau dengan tombol ⟳.
-- **Kadaluarsa:** dibaca dari komentar user yang dibuat Mikhmon dan validity di profil, atau dari scheduler yang bernama sama dengan user.
+## Pakai pertama kali (di aplikasi)
 
-## Batas indikator (ubah di `www/assets/app.js`, bagian `LIM`)
-| Indikator | Maks | Kuning | Merah |
-|---|---|---|---|
-| Penggunaan Data user | 500 GB | 400 GB | 450 GB |
-| Kadaluarsa | 100% | 70% | 90% |
-| Total Data | 30.000 GB | 25.000 GB | 28.000 GB |
-| Hotspot Aktif | 100 | 70 | 90 |
-| Lalu Lintas | 200 Mbps | 150 Mbps | 180 Mbps |
-| Interface Padat | 40 Mbps | 30 Mbps | 35 Mbps |
+Buka **Peraturan → Tambah Router**, isi:
+- **Nama Sesi** — bebas, mis. `alhuda`.
+- **Nama Hotspot** — mis. `alhuda_d.net` (untuk judul voucher).
+- **IP / Host MikroTik** — alamat API router. Jika pakai tunnel seperti di
+  Mikhmon Anda, isi host-nya saja, mis. `id-16.tunnel.web.id`.
+- **Port API** — default MikroTik `8728`. Jika lewat tunnel, pakai port
+  tunnelnya (mis. `7999`).
+- **Username / Password** — user API MikroTik Anda.
+- **Mata Uang** — mis. `Rp`.
+- **Antarmuka Lalu Lintas** — interface untuk grafik trafik, mis. `ether1`
+  (pilih interface WAN, bukan port CCTV).
 
-## Catatan keamanan
-User dan password API tersimpan di dalam APK. Siapa pun yang membongkar APK bisa melihatnya.
-Karena itu, **jangan pakai akun admin penuh**. Gunakan grup `apk-hotspot` (read, write, api) seperti pada langkah 2.
+Lalu tekan **Connect**. Kalau hijau "Connected", semua menu aktif. Bisa
+menambah beberapa router; pilih lewat dropdown di atas.
+
+### Syarat di MikroTik
+- Service **api** harus aktif: `/ip service enable api` (atau lewat Winbox:
+  IP → Services → api → enable). Port default 8728.
+- User yang dipakai harus punya hak **api** + **read/write** (grup `full`
+  paling mudah).
+- Jika router di belakang NAT, API harus bisa dijangkau dari internet
+  (lewat tunnel/port-forward) — sama seperti yang sudah Anda pakai di Mikhmon.
+
+---
+
+## Catatan
+
+- **Laporan pendapatan** hanya terisi untuk profil bermode **"Remove & Record"**
+  atau **"Notice & Record"** (RouterOS mencatat transaksi dari situ).
+- **Cetak PDF** memakai dialog cetak sistem (Save as PDF). **Bagikan WA** membuka
+  WhatsApp dengan teks voucher.
+- Semua data (daftar router + password) disimpan **lokal di HP** — tidak dikirim
+  ke mana pun selain langsung ke router Anda. Jaga HP tetap aman.
+- Router RouterOS v6 (seperti 6.49) memakai API binari ini (belum ada REST API).
+  Aplikasi sudah menangani login v6 maupun v6.43+.
+
+## Ubah Application ID
+Default `net.alhudadnet.admin` di `capacitor.config.json`. Ubah **sebelum**
+`npx cap add android` bila perlu.

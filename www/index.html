@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b4a37">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob: capacitor: http: https:">
-<title>DAYAH AL-HUDA MALIKUSSALEH</title>
-<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-<link rel="stylesheet" href="assets/app.css">
-<script>try{document.documentElement.setAttribute("data-theme",JSON.parse(localStorage.getItem("ahb_theme"))||"hijau")}catch(e){document.documentElement.setAttribute("data-theme","hijau")}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#2f6fed">
+<title>ALHUDA_D.NET</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="topbar">
-  <img src="assets/logo.svg" alt="" class="brand-logo">
-  <div class="brand-text">
-    <strong id="headerText">ALHUDA_D.NET</strong>
-    <small><i id="netDot" class="net-dot"></i><span id="siteTitle">DAYAH AL-HUDA MALIKUSSALEH</span></small>
-  </div>
-  <div class="hdr-actions">
-  <button id="themeBtn" class="icon-btn" aria-label="Tema" title="Tema">
-    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3a9 9 0 0 0 0 18c1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.7 1.7-1.7h2A4.6 4.6 0 0 0 21 10.6C21 6.4 17 3 12 3zM6.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
-  </button>
-  <button id="settingsBtn" class="icon-btn" aria-label="Peraturan" title="Peraturan">
-    <svg id="icGear" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.6 7.6 0 0 0-1.7-1L15 3.3h-4l-.4 2.6c-.6.2-1.2.6-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.8 1.7 1l.4 2.6h4l.4-2.6c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
-    <svg id="icClose" viewBox="0 0 24 24" width="22" height="22" hidden><path fill="currentColor" d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z" transform="translate(1.2 0)"/></svg>
-    <i id="notifDot" class="dot" hidden></i>
-  </button>
-  </div>
+
+<header class="appbar">
+  <button class="iconbtn" id="refreshBtn" title="Muat ulang">⟳</button>
+  <div class="brand"><img id="appLogo" alt="" style="display:none"><span id="appName">ALHUDA_D.NET</span></div>
+  <button class="iconbtn" id="themeBtn" title="Ganti Tema">🎨</button>
+  <button class="iconbtn switch" id="switchBtn" title="Beralih Mode">Switch</button>
 </header>
 
-<main id="view" class="container"></main>
+<main id="view" class="wrap">
+  <div class="loading"><span class="spin"></span> Memuat…</div>
+</main>
 
-<div id="sheet" class="sheet" hidden><div class="sheet-card" id="sheetCard"></div></div>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<nav class="tabbar" id="tabbar">
+  <a data-route="beranda" class="on">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a>
+  <a data-route="pengguna">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 11h5M18.5 8.5v5"/></svg>Pengguna</a>
+  <a data-route="log">
+    <svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Log</a>
+  <a data-route="laporan">
+    <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Laporan</a>
+  <a data-route="peralatan">
+    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5z"/></svg>Peralatan</a>
+  <a data-route="peraturan">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.35-2.5h-4L12.2 5a7 7 0 0 0-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.35 2.5h4l.35-2.5a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5a7 7 0 0 0 .1-1z"/></svg>Peraturan</a>
+</nav>
 
-<script src="assets/backend.js"></script>
-<script src="assets/app.js"></script>
+<iframe id="printFrame" style="position:fixed;width:0;height:0;border:0;left:-9999px"></iframe>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
