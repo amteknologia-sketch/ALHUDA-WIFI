@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<meta name="theme-color" content="#0b4a37">
+<title>DAYAH AL-HUDA MALIKUSSALEH</title>
+<link rel="icon" type="image/svg+xml" href="img/logo.svg">
+<style>
+:root{--g:#0b4a37;--g2:#14624a;--gs:#e3f1ea;--gold:#d9b45a;--cream:#f6f3ea;--ink:#1c2a24;--mut:#66756e;--line:#e2ddd0;--bad:#d63b3b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.45}
+[hidden]{display:none!important}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff}
+.top img{width:40px;height:40px;border-radius:10px}.top .t{flex:1;min-width:0}.top small{display:block;font-size:10.5px;letter-spacing:.08em;color:#f4e6bf}
+.top b{font-size:18px}.rf{border:0;background:rgba(255,255,255,.14);color:#fff;width:40px;height:40px;border-radius:12px;font-size:20px;cursor:pointer}
+.wrap{max-width:520px;margin:0 auto;padding:14px}
+.hero{text-align:center;margin:4px 0 12px}.hero img{width:70px;height:70px;border-radius:18px}.hero h1{margin:6px 0 0;font-size:18px;letter-spacing:.06em;color:var(--g)}
+.ann{border-radius:12px;padding:10px 12px;margin-bottom:10px;font-size:14px;white-space:pre-line}
+.ann.info{background:#e6f0fb;color:#1d4f86;border:1px solid #c7dbf3}.ann.warn{background:#fff6dd;color:#7a5600;border:1px solid #f3df9e}.ann.danger{background:#fde8e8;color:#8a1f1f;border:1px solid #f5c2c2}
+.ann:before{content:"📢 "}
+.srv{text-align:center;font-size:13px;color:var(--mut);margin:4px 0 12px}.srv b{color:var(--ink)}
+.banner{width:100%;aspect-ratio:8/3;object-fit:cover;border-radius:16px;display:block;margin-bottom:14px;background:#dfe9e4}
+.card{background:#fff;border-radius:16px;padding:16px;border:1px solid #efeadf;box-shadow:0 2px 10px rgba(11,74,55,.08)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);margin-bottom:6px}
+.in{width:100%;padding:13px;border:1.5px solid var(--line);border-radius:12px;font-size:20px;text-align:center;letter-spacing:.08em;font-weight:600;outline:none}
+.in:focus{border-color:var(--g2)}
+.hint{font-size:12.5px;color:var(--mut);text-align:center;margin:8px 0 12px}
+.btn{width:100%;border:0;border-radius:12px;padding:13px;font-weight:800;letter-spacing:.1em;color:#fff;background:linear-gradient(135deg,var(--g2),var(--g));font-size:16px;cursor:pointer}
+.btn:disabled{opacity:.6}
+.sm{display:inline-block;width:auto;padding:7px 11px;font-size:13px;letter-spacing:0;border-radius:10px;background:var(--gs);color:var(--g);font-weight:700;border:0;cursor:pointer}
+.sm.red{background:#fde8e8;color:var(--bad)}
+.note{display:flex;gap:10px;font-size:13px;padding:10px 12px;border-radius:12px;background:#f7f4ec;border:1px dashed #d8cfb6;margin-top:10px}
+.al{border-radius:12px;padding:12px;margin-top:12px;font-size:14px}.al b{display:block;margin-bottom:4px}
+.err{background:#fde8e8;color:#8a1f1f;border:1px solid #f5c2c2}.warn{background:#fff6dd;color:#6b4c00;border:1px solid #f3df9e}.ok{background:#e4f6ec;color:#11633a;border:1px solid #bfe6cf}
+.sess{border:1px solid #eee7d6;border-radius:12px;padding:10px;margin-top:8px;display:flex;gap:10px;align-items:center;background:#fff}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px;flex:1}.kv span:nth-child(odd){color:var(--mut)}.kv span:nth-child(even){font-weight:600;word-break:break-all}
+.foot{text-align:center;color:var(--mut);font-size:12.5px;margin:22px 0 10px;line-height:1.7}.foot div:first-child{font-weight:700;color:var(--g)}
+</style>
+</head>
+<body>
+<!--
+  HALAMAN LOGIN HOTSPOT — ALHUDA_D.NET
+  Unggah ke MikroTik: Files > hotspot/ (ganti login.html bawaan). Folder img/ ikut diunggah.
+  Ubah alamat PORTAL di bawah (bagian <script>) ke alamat aplikasi portal Anda.
+-->
+<div class="top">
+  <img src="img/logo.svg" alt="">
+  <div class="t"><small id="stitle">DAYAH AL-HUDA MALIKUSSALEH</small><b id="hdr">ALHUDA_D.NET</b></div>
+  <button class="rf" type="button" onclick="location.reload()" title="Muat ulang">⟳</button>
+</div>
+
+<div class="wrap">
+  <div class="hero"><img src="img/logo.svg" alt="Logo"><h1 id="dname">DAYAH AL-HUDA MALIKUSSALEH</h1></div>
+  <div id="ann"></div>
+  <div class="srv">Server Hotspot : <b>$(server-name)</b> &nbsp;|&nbsp; IP : <b>$(ip)</b></div>
+  <img class="banner" id="banner" src="img/banner.svg" alt="Banner">
+
+  <div class="card">
+    <form name="login" onsubmit="return doLogin()" autocomplete="off">
+      <label for="u">Masukkan Username (Username = Password)</label>
+      <input class="in" id="u" name="username" value="$(username)" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="kode voucher">
+      <div class="hint" id="hint">Diketik, jangan di-Paste &gt; Klik hubungkan</div>
+      <button class="btn" id="go" type="submit">HUBUNGKAN</button>
+    </form>
+    <div id="msg">$(if error)<div class="al err" id="rerr"><b>Gagal login</b>$(error)</div>$(endif)</div>
+    <div id="list"></div>
+    <div class="note"><span>📱</span><span id="macn">Sebelum login mohon ubah dulu MAC address ke MAC ponsel/perangkat. Nonaktifkan jika pengguna iPhone.</span></div>
+    <div class="note"><span>🔋</span><span id="upsn">Modem/router dilengkapi dengan UPS, tetap bisa internetan walaupun listrik padam, bisa bertahan 3-10 jam.</span></div>
+  </div>
+
+  <div class="foot" id="foot">
+    <div>Property Of DAMAS.Media_Centre Tahun 2026</div>
+    <div>Dayah Al-Huda Malikussaleh</div>
+    <div>Desain Aplikasi : Tgk. Khairuddin Zakas, S.Pd</div>
+  </div>
+</div>
+
+<form name="sendin" action="$(link-login-only)" method="post" hidden>
+  <input type="hidden" name="username">
+  <input type="hidden" name="password">
+  <input type="hidden" name="dst" value="$(link-orig)">
+  <input type="hidden" name="popup" value="true">
+</form>
+
+<script>
+/* ====== UBAH INI: alamat aplikasi portal (akhiri dengan /) ======
+   Contoh: 'https://putrihijau.mymikhmon.my.id/alhuda-dnet/'  atau  'http://192.168.88.10/alhuda-dnet/'
+   Kosongkan ('') jika belum ada portal — login tetap berjalan normal. */
+var PORTAL = '';
+
+var CHAP_ID = '$(chap-id)', CHAP_CH = '$(chap-challenge)', CLIENT_IP = '$(ip)', ROUTER_ERR = '$(error)';
+
+/* MD5 untuk login CHAP (bekerja per byte, sama seperti md5.js bawaan MikroTik) */
+function hexMD5(s) {
+  function add(x, y) { var l = (x & 0xFFFF) + (y & 0xFFFF); return (((x >> 16) + (y >> 16) + (l >> 16)) << 16) | (l & 0xFFFF); }
+  function rol(n, c) { return (n << c) | (n >>> (32 - c)); }
+  var K = [], S = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21], x = [], i, j, n = s.length;
+  for (i = 0; i < 64; i++) K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296) | 0;
+  for (i = 0; i < n * 8; i += 8) x[i >> 5] |= (s.charCodeAt(i / 8) & 255) << (i % 32);
+  x[(n * 8) >> 5] |= 0x80 << ((n * 8) % 32);
+  x[(((n * 8 + 64) >>> 9) << 4) + 14] = n * 8;
+  var a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+  for (i = 0; i < x.length; i += 16) {
+    var A = a, B = b, C = c, D = d;
+    for (j = 0; j < 64; j++) {
+      var f, g, r = j >> 4;
+      if (r === 0) { f = (B & C) | (~B & D); g = j; }
+      else if (r === 1) { f = (D & B) | (~D & C); g = (5 * j + 1) % 16; }
+      else if (r === 2) { f = B ^ C ^ D; g = (3 * j + 5) % 16; }
+      else { f = C ^ (B | ~D); g = (7 * j) % 16; }
+      var t = D; D = C; C = B;
+      B = add(B, rol(add(add(A, f), add(K[j], x[i + g] | 0)), S[(r << 2) | (j & 3)]));
+      A = t;
+    }
+    a = add(a, A); b = add(b, B); c = add(c, C); d = add(d, D);
+  }
+  var hex = '', w = [a, b, c, d];
+  for (i = 0; i < 16; i++) hex += ('0' + ((w[i >> 2] >>> ((i % 4) * 8)) & 255).toString(16)).slice(-2);
+  return hex;
+}
+
+function el(id) { return document.getElementById(id); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+function portal(action, body) {
+  return new Promise(function (ok, no) {
+    if (!PORTAL || !window.fetch) return no();
+    var done = false, tm = setTimeout(function () { if (!done) { done = true; no(); } }, 4000);
+    fetch(PORTAL + 'api.php?action=' + action, {
+      method: body ? 'POST' : 'GET', headers: { 'Content-Type': 'text/plain' }, body: body ? JSON.stringify(body) : undefined
+    }).then(function (r) { return r.json(); }).then(function (j) { if (!done) { done = true; clearTimeout(tm); ok(j); } }, function () { if (!done) { done = true; clearTimeout(tm); no(); } });
+  });
+}
+
+function send(name) {
+  document.sendin.username.value = name;
+  document.sendin.password.value = CHAP_ID ? hexMD5(CHAP_ID + name + CHAP_CH) : name;
+  document.sendin.submit();
+}
+
+function showOnline(j) {
+  var box = el('list');
+  box.innerHTML = (j.sessions || []).map(function (s) {
+    return '<div class="sess"><div class="kv"><span>MAC Address</span><span>' + esc(s.mac) + '</span><span>IP</span><span>' + esc(s.ip) + '</span><span>Server</span><span>' + esc(s.server) + '</span></div>' +
+      '<button class="sm red" type="button" data-id="' + esc(s.id) + '">Keluarkan</button></div>';
+  }).join('') || '<div class="al ok">Tidak ada perangkat online.</div>';
+  var bs = box.querySelectorAll('button[data-id]');
+  for (var i = 0; i < bs.length; i++) bs[i].onclick = function () {
+    var b = this; if (!confirm('Keluarkan perangkat ini?')) return; b.disabled = true;
+    portal('kick', { username: j.user.name, id: b.getAttribute('data-id') }).then(function (r) {
+      if (r.ok) { el('msg').innerHTML = '<div class="al ok">' + esc(r.message) + ' Silakan tekan HUBUNGKAN lagi.</div>'; box.innerHTML = ''; }
+      else { b.disabled = false; alert(r.error); }
+    }, function () { b.disabled = false; alert('Portal tidak dapat dihubungi.'); });
+  };
+}
+
+function overLimit(j) {
+  el('msg').innerHTML = '<div class="al warn"><b>Online melebihi batas</b>' + esc(j.message) +
+    '<div style="margin-top:10px"><button class="sm" type="button" id="see">Lihat Username Online</button></div></div>';
+  el('see').onclick = function () { showOnline(j); };
+}
+
+function doLogin() {
+  var name = el('u').value.replace(/\s+/g, '');
+  if (!name) { el('msg').innerHTML = '<div class="al err">Masukkan username terlebih dahulu.</div>'; return false; }
+  var go = el('go'); go.disabled = true; go.textContent = 'MENGHUBUNGKAN…';
+  el('list').innerHTML = '';
+  portal('check', { username: name, ip: CLIENT_IP }).then(function (j) {
+    go.disabled = false; go.textContent = 'HUBUNGKAN';
+    if (!j.ok) return send(name);
+    if (j.status === 'notfound') { el('msg').innerHTML = '<div class="al err"><b>Username tidak tersedia</b>Periksa kembali kode yang Anda ketik.</div>'; return; }
+    if (j.status === 'overlimit') return overLimit(j);
+    if (j.status === 'disabled' || j.status === 'expired') { el('msg').innerHTML = '<div class="al err"><b>Tidak bisa login</b>' + esc(j.message) + '</div>'; return; }
+    send(name);
+  }, function () { send(name); }); // portal tidak terjangkau: login langsung
+  return false;
+}
+
+/* Terjemahkan pesan error bawaan router */
+(function () {
+  var e = (ROUTER_ERR || '').toLowerCase(), m = el('msg');
+  if (!e) return;
+  if (/invalid username|no such user|invalid password|user .* not found/.test(e)) m.innerHTML = '<div class="al err"><b>Username tidak tersedia</b>Periksa kembali kode yang Anda ketik.</div>';
+  else if (/no more sessions|already logged|simultaneous/.test(e)) {
+    m.innerHTML = '<div class="al warn"><b>Online melebihi batas</b>Username benar tetapi sudah dipakai di perangkat lain.</div>';
+    var n = el('u').value; if (n) portal('check', { username: n, ip: CLIENT_IP }).then(function (j) { if (j.ok && j.user) overLimit(j); }, function () {});
+  } else if (/uptime limit|traffic limit|expired/.test(e)) m.innerHTML = '<div class="al err"><b>Masa berlaku / kuota habis</b>' + esc(ROUTER_ERR) + '</div>';
+})();
+
+/* Ambil tampilan terbaru (header, banner, pemberitahuan) dari portal */
+portal('config').then(function (j) {
+  if (!j.ok) return;
+  var c = j.config;
+  if (c.header) el('hdr').textContent = c.header;
+  if (c.site_title) { el('stitle').textContent = c.site_title; el('dname').textContent = c.site_title; document.title = c.site_title; }
+  if (c.banner) el('banner').src = PORTAL + c.banner;
+  if (c.login_hint) el('hint').textContent = c.login_hint;
+  if (c.mac_note) el('macn').textContent = c.mac_note;
+  if (c.ups_note) el('upsn').textContent = c.ups_note;
+  el('ann').innerHTML = (c.announcements || []).map(function (a) { return '<div class="ann ' + esc(a.type || 'info') + '">' + esc(a.text) + '</div>'; }).join('');
+  if (c.footer && c.footer.length) el('foot').innerHTML = c.footer.map(function (l) { return '<div>' + esc(l) + '</div>'; }).join('');
+}, function () {});
+el('banner').onerror = function () { this.onerror = null; this.src = 'img/banner.svg'; };
+el('u').focus();
+</script>
+</body>
+</html>

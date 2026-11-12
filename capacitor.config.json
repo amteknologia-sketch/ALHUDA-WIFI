@@ -1,0 +1,13 @@
+{
+  "appId": "id.alhuda.dnet",
+  "appName": "ALHUDA_D.NET",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true,
+    "adjustMarginsForEdgeToEdge": "auto"
+  }
+}

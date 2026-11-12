@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360">
+  <defs>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b4a37"/>
+      <stop offset="1" stop-color="#1b7a5a"/>
+    </linearGradient>
+    <pattern id="p" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M24 2 L46 24 L24 46 L2 24 Z" fill="none" stroke="#ffffff" stroke-opacity=".07" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="960" height="360" fill="url(#b)"/>
+  <rect width="960" height="360" fill="url(#p)"/>
+  <g fill="none" stroke="#d9b45a" stroke-linecap="round" stroke-width="10" opacity=".9">
+    <path d="M700 250 a110 110 0 0 1 160 0"/>
+    <path d="M728 280 a70 70 0 0 1 104 0"/>
+  </g>
+  <circle cx="780" cy="310" r="12" fill="#d9b45a"/>
+  <text x="60" y="160" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="64" font-weight="800" fill="#ffffff">ALHUDA_D.NET</text>
+  <text x="62" y="210" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="26" fill="#f4e6bf" letter-spacing="3">HOTSPOT DAYAH AL-HUDA MALIKUSSALEH</text>
+  <rect x="62" y="236" width="120" height="6" rx="3" fill="#d9b45a"/>
+</svg>

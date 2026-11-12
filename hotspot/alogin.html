@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="pragma" content="no-cache">
+<title>Terhubung — ALHUDA_D.NET</title>
+<link rel="icon" type="image/svg+xml" href="img/logo.svg">
+<style>
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f6f3ea;color:#1c2a24;display:grid;place-items:center;min-height:100vh;text-align:center}
+.c{background:#fff;border-radius:18px;padding:26px 22px;max-width:360px;margin:16px;box-shadow:0 2px 12px rgba(11,74,55,.1)}
+img{width:72px;height:72px;border-radius:18px}h1{color:#0b4a37;font-size:20px;margin:12px 0 4px}
+a{display:block;margin-top:14px;padding:12px;border-radius:12px;background:linear-gradient(135deg,#14624a,#0b4a37);color:#fff;text-decoration:none;font-weight:700}
+.m{color:#66756e;font-size:14px}
+</style>
+</head>
+<body>
+<div class="c">
+  <img src="img/logo.svg" alt="">
+  <h1>Login berhasil ✔</h1>
+  <div class="m">Selamat datang, <b>$(username)</b>. Anda sudah terhubung ke internet.</div>
+  <a id="pl" href="$(link-redirect)">Lanjutkan</a>
+  <a id="st" href="$(link-status)" style="background:#e3f1ea;color:#0b4a37">Status & Log Out</a>
+</div>
+<script>
+/* Samakan dengan PORTAL di login.html (akhiri dengan /). Jika diisi, user langsung diarahkan ke
+   halaman Beranda portal yang menampilkan nama user, penggunaan data & masa berlaku. */
+var PORTAL = '';
+if (PORTAL) {
+  var link = PORTAL + '?u=' + encodeURIComponent('$(username)') + '#beranda';
+  document.getElementById('pl').href = link;
+  setTimeout(function () { location.href = link; }, 1500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14624a"/>
+      <stop offset="1" stop-color="#0a3d2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#g)"/>
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#d9b45a" stroke-width="3"/>
+  <!-- kubah -->
+  <path d="M40 74 C40 52 52 42 64 34 C76 42 88 52 88 74 Z" fill="#d9b45a"/>
+  <rect x="62.5" y="22" width="3" height="13" fill="#d9b45a"/>
+  <path d="M64 16 a5 5 0 1 0 4 8 a4 4 0 1 1 -4 -8z" fill="#d9b45a"/>
+  <rect x="34" y="74" width="60" height="6" rx="2" fill="#f4e6bf"/>
+  <!-- sinyal wifi -->
+  <path d="M46 98 a26 26 0 0 1 36 0" fill="none" stroke="#f4e6bf" stroke-width="4" stroke-linecap="round"/>
+  <path d="M53 105 a16 16 0 0 1 22 0" fill="none" stroke="#f4e6bf" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="64" cy="111" r="3.5" fill="#f4e6bf"/>
+</svg>
