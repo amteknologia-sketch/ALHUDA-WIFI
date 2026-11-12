@@ -8,35 +8,31 @@
 <title>DAYAH AL-HUDA MALIKUSSALEH</title>
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <link rel="stylesheet" href="assets/app.css">
+<script>try{document.documentElement.setAttribute("data-theme",JSON.parse(localStorage.getItem("ahb_theme"))||"hijau")}catch(e){document.documentElement.setAttribute("data-theme","hijau")}</script>
 </head>
 <body>
 <header class="topbar">
-  <div class="brand">
-    <img src="assets/logo.svg" alt="" class="brand-logo">
-    <div class="brand-text">
-      <small id="siteTitle">DAYAH AL-HUDA MALIKUSSALEH</small>
-      <strong id="headerText">ALHUDA_D.NET</strong>
-    </div>
+  <img src="assets/logo.svg" alt="" class="brand-logo">
+  <div class="brand-text">
+    <strong id="headerText">ALHUDA_D.NET</strong>
+    <small><i id="netDot" class="net-dot"></i><span id="siteTitle">DAYAH AL-HUDA MALIKUSSALEH</span></small>
   </div>
-  <span id="netBadge" class="net-badge" hidden>Router offline</span>
-  <button id="refreshBtn" class="icon-btn" title="Muat ulang data" aria-label="Muat ulang data">
-    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 4a8 8 0 0 1 7.75 6h-2.1A6 6 0 1 0 18 14h2.08A8 8 0 1 1 12 4zm5 1.5 3.5-.5-.5 3.5-1.06-1.06A7.97 7.97 0 0 0 12 4V2c2.6 0 5 .98 6.8 2.6z"/></svg>
+  <div class="hdr-actions">
+  <button id="themeBtn" class="icon-btn" aria-label="Tema" title="Tema">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3a9 9 0 0 0 0 18c1 0 1.7-.8 1.7-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.7 1.7-1.7h2A4.6 4.6 0 0 0 21 10.6C21 6.4 17 3 12 3zM6.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
   </button>
+  <button id="settingsBtn" class="icon-btn" aria-label="Peraturan" title="Peraturan">
+    <svg id="icGear" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.6 7.6 0 0 0-1.7-1L15 3.3h-4l-.4 2.6c-.6.2-1.2.6-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.8 1.7 1l.4 2.6h4l.4-2.6c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
+    <svg id="icClose" viewBox="0 0 24 24" width="22" height="22" hidden><path fill="currentColor" d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z" transform="translate(1.2 0)"/></svg>
+    <i id="notifDot" class="dot" hidden></i>
+  </button>
+  </div>
 </header>
-<div id="userBar" class="userbar" hidden></div>
 
 <main id="view" class="container"></main>
 
-<nav class="bottomnav">
-  <a href="#beranda" data-tab="beranda"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><span>Beranda</span></a>
-  <a href="#informasi" data-tab="informasi"><svg viewBox="0 0 24 24"><path d="M4 20V10h3v10zm6.5 0V4h3v16zM17 20v-7h3v7z"/></svg><span>Informasi</span></a>
-  <a href="#paket" data-tab="paket"><svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11zm0 2.2 6.3 3.1L12 10.4 5.7 7.3zM5 9l6 3v7.6l-6-3zm8 10.6V12l6-3v7.6z"/></svg><span>Paket</span></a>
-  <a href="#wifi" data-tab="wifi"><svg viewBox="0 0 24 24"><path d="M12 18.5a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6zM5.6 13.4a9 9 0 0 1 12.8 0l-1.7 1.7a6.6 6.6 0 0 0-9.4 0zM2 9.8a14 14 0 0 1 20 0l-1.7 1.7a11.6 11.6 0 0 0-16.6 0z"/></svg><span>Wifi</span></a>
-  <a href="#peraturan" data-tab="peraturan"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5zm0 6a2.5 2.5 0 0 1 1 4.8V15h-2v-3.2A2.5 2.5 0 0 1 12 7z"/></svg><span>Peraturan</span><i id="notifDot" class="dot" hidden></i></a>
-</nav>
-
+<div id="sheet" class="sheet" hidden><div class="sheet-card" id="sheetCard"></div></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<iframe name="hsframe" id="hsframe" title="hotspot" hidden></iframe>
 
 <script src="assets/backend.js"></script>
 <script src="assets/app.js"></script>

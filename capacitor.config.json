@@ -8,6 +8,11 @@
   },
   "android": {
     "allowMixedContent": true,
-    "adjustMarginsForEdgeToEdge": "auto"
+    "adjustMarginsForEdgeToEdge": "disable"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#0b4a37"
+    }
   }
 }

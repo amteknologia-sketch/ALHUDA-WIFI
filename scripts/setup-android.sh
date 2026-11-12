@@ -26,3 +26,10 @@ find "$RES" -name 'splash.png' | while read -r f; do
 done
 
 echo "Plugin RosSocket, ikon dan splash ALHUDA_D.NET terpasang."
+
+# Izin notifikasi (Android 13+) untuk pengingat masa berlaku
+MAN=android/app/src/main/AndroidManifest.xml
+if ! grep -q "POST_NOTIFICATIONS" "$MAN"; then
+  sed -i 's#</manifest>#    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n</manifest>#' "$MAN"
+fi
+echo "Izin notifikasi ditambahkan."

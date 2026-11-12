@@ -2,7 +2,9 @@
 Dayah Al-Huda Malikussaleh · Property Of DAMAS.Media_Centre 2026
 
 Aplikasi Android ini **terhubung langsung ke API MikroTik (10.10.10.1:8728) dari HP**, tanpa server atau hosting.
-Menu yang tersedia: Beranda, Informasi, Paket, Wifi, dan Peraturan.
+Tampilan: satu halaman utama, berurutan Penggunaan → Username (Edit/Keluar) → Penggunaan & Kadaluarsa (hitung mundur) → Daftar Online (DOWN/UP langsung) → Daftar Cookie → Interface Padat (5 terbesar).
+Di kanan atas: ikon 🎨 Tema (Terang, Biru, Hijau, Pink, Gelap — warna ikut sampai area jam) dan ⚙️ Peraturan (admin).
+Notifikasi Android otomatis muncul 1 hari sebelum masa berlaku username habis (izin notifikasi diminta saat pertama kali).
 
 ## Cara build APK (GitHub Actions, tanpa install apa pun di laptop)
 

@@ -443,6 +443,8 @@
     var r, leases = {}, rates = {}, hosts = {};
     return self.summary(n, self.myIp).then(function (x) {
       r = x; if (r.status === 'notfound') return null;
+      // pemantauan: dianggap melebihi batas hanya jika jumlah online > batas
+      if (r.status === 'overlimit' && r.user.online <= r.user.limit) { r.status = 'ok'; r.message = ''; }
       return ros.q('/ip/dhcp-server/lease/print', { '.proplist': 'mac-address,host-name' }).catch(function () { return []; }).then(function (ls) {
         ls.forEach(function (l) { if (l['mac-address']) leases[l['mac-address'].toUpperCase()] = l['host-name'] || ''; });
         return ros.q('/queue/simple/print', { '.proplist': 'name,target,rate' }).catch(function () { return []; });
@@ -452,7 +454,18 @@
           var ipq = q.target.split(',')[0].split('/')[0], p = q.rate.split('/');
           rates[ipq] = { up: +p[0], down: +(p[1] || 0) };
         });
-        r.sessions.forEach(function (s) { s.device = leases[s.mac.toUpperCase()] || '-'; s.rate = rates[s.ip] || null; });
+        // kecepatan: dari antrean hotspot; jika tidak ada, dihitung dari selisih byte sesi aktif
+        var nowMs = Date.now(); self.prevSess = self.prevSess || {};
+        r.sessions.forEach(function (s) {
+          var prev = self.prevSess[s.id], rate = rates[s.ip] || null;
+          if (!rate && prev && nowMs - prev.t > 500) {
+            var dt = (nowMs - prev.t) / 1000;
+            rate = { down: Math.max(0, (s.bytes_out - prev.out) * 8 / dt), up: Math.max(0, (s.bytes_in - prev.inb) * 8 / dt), calc: true };
+          }
+          self.prevSess[s.id] = { t: nowMs, inb: s.bytes_in, out: s.bytes_out };
+          s.device = leases[s.mac.toUpperCase()] || '-';
+          s.rate = rate;
+        });
         return ros.q('/ip/hotspot/host/print', { '.proplist': 'mac-address,address,server' }).catch(function () { return []; });
       }).then(function (hs) {
         hs.forEach(function (h) { hosts[(h['mac-address'] || '').toUpperCase()] = h; });

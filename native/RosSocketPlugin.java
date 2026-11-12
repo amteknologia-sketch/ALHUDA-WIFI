@@ -7,6 +7,14 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import android.view.View;
+import android.view.Window;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -128,6 +136,43 @@ public class RosSocketPlugin extends Plugin {
         JSObject r = new JSObject();
         r.put("ip", found);
         call.resolve(r);
+    }
+
+    /** Tinggi status bar (area jam) & navigation bar dalam px CSS */
+    @PluginMethod
+    public void insets(final PluginCall call) {
+        getActivity().runOnUiThread(() -> {
+            int top = 0, bottom = 0;
+            try {
+                View v = getBridge().getWebView();
+                WindowInsetsCompat wi = ViewCompat.getRootWindowInsets(v);
+                if (wi != null) {
+                    Insets in = wi.getInsets(WindowInsetsCompat.Type.systemBars());
+                    float d = getContext().getResources().getDisplayMetrics().density;
+                    top = Math.round(in.top / d);
+                    bottom = Math.round(in.bottom / d);
+                }
+            } catch (Exception ignored) { }
+            JSObject r = new JSObject();
+            r.put("top", top);
+            r.put("bottom", bottom);
+            call.resolve(r);
+        });
+    }
+
+    /** Warna ikon jam/baterai: gelap (untuk tema terang) atau putih */
+    @PluginMethod
+    public void setSystemBars(final PluginCall call) {
+        final boolean darkIcons = call.getBoolean("darkIcons", false);
+        getActivity().runOnUiThread(() -> {
+            try {
+                Window w = getActivity().getWindow();
+                WindowInsetsControllerCompat c = WindowCompat.getInsetsController(w, w.getDecorView());
+                c.setAppearanceLightStatusBars(darkIcons);
+                c.setAppearanceLightNavigationBars(darkIcons);
+            } catch (Exception ignored) { }
+            call.resolve();
+        });
     }
 
     @Override
